@@ -1,0 +1,212 @@
+{
+  "hours": [
+    {
+      "time": "2024-01-15T06:00:00+00:00",
+      "waveHeight":              {"sg": 0.82}, "wavePeriod":  {"sg": 9.5},  "waveDirection":              {"sg": 278},
+      "swellHeight":             {"sg": 0.78}, "swellPeriod": {"sg": 10.1}, "swellDirection":             {"sg": 272},
+      "secondarySwellHeight":    {"sg": 0.21}, "secondarySwellPeriod": {"sg": 6.2}, "secondarySwellDirection": {"sg": 198},
+      "windSpeed":               {"sg": 2.1},  "windDirection": {"sg": 12},  "gust": {"sg": 3.4},
+      "waterTemperature":        {"sg": 17.2}
+    },
+    {
+      "time": "2024-01-15T07:00:00+00:00",
+      "waveHeight":              {"sg": 0.85}, "wavePeriod":  {"sg": 9.8},  "waveDirection":              {"sg": 275},
+      "swellHeight":             {"sg": 0.81}, "swellPeriod": {"sg": 10.3}, "swellDirection":             {"sg": 270},
+      "secondarySwellHeight":    {"sg": 0.20}, "secondarySwellPeriod": {"sg": 6.1}, "secondarySwellDirection": {"sg": 195},
+      "windSpeed":               {"sg": 2.3},  "windDirection": {"sg": 8},   "gust": {"sg": 3.6},
+      "waterTemperature":        {"sg": 17.2}
+    },
+    {
+      "time": "2024-01-15T08:00:00+00:00",
+      "waveHeight":              {"sg": 0.88}, "wavePeriod":  {"sg": 10.1}, "waveDirection":              {"sg": 272},
+      "swellHeight":             {"sg": 0.84}, "swellPeriod": {"sg": 10.5}, "swellDirection":             {"sg": 268},
+      "secondarySwellHeight":    {"sg": 0.19}, "secondarySwellPeriod": {"sg": 6.0}, "secondarySwellDirection": {"sg": 192},
+      "windSpeed":               {"sg": 2.5},  "windDirection": {"sg": 5},   "gust": {"sg": 3.9},
+      "waterTemperature":        {"sg": 17.3}
+    },
+    {
+      "time": "2024-01-15T09:00:00+00:00",
+      "waveHeight":              {"sg": 0.91}, "wavePeriod":  {"sg": 10.2}, "waveDirection":              {"sg": 271},
+      "swellHeight":             {"sg": 0.87}, "swellPeriod": {"sg": 10.6}, "swellDirection":             {"sg": 267},
+      "secondarySwellHeight":    {"sg": 0.18}, "secondarySwellPeriod": {"sg": 5.9}, "secondarySwellDirection": {"sg": 190},
+      "windSpeed":               {"sg": 2.4},  "windDirection": {"sg": 15},  "gust": {"sg": 3.7},
+      "waterTemperature":        {"sg": 17.3}
+    },
+    {
+      "time": "2024-01-15T10:00:00+00:00",
+      "waveHeight":              {"sg": 0.93}, "wavePeriod":  {"sg": 10.3}, "waveDirection":              {"sg": 270},
+      "swellHeight":             {"sg": 0.89}, "swellPeriod": {"sg": 10.7}, "swellDirection":             {"sg": 265},
+      "secondarySwellHeight":    {"sg": 0.18}, "secondarySwellPeriod": {"sg": 5.8}, "secondarySwellDirection": {"sg": 188},
+      "windSpeed":               {"sg": 2.7},  "windDirection": {"sg": 20},  "gust": {"sg": 4.2},
+      "waterTemperature":        {"sg": 17.4}
+    },
+    {
+      "time": "2024-01-15T11:00:00+00:00",
+      "waveHeight":              {"sg": 0.95}, "wavePeriod":  {"sg": 10.1}, "waveDirection":              {"sg": 268},
+      "swellHeight":             {"sg": 0.90}, "swellPeriod": {"sg": 10.5}, "swellDirection":             {"sg": 263},
+      "secondarySwellHeight":    {"sg": 0.19}, "secondarySwellPeriod": {"sg": 5.8}, "secondarySwellDirection": {"sg": 185},
+      "windSpeed":               {"sg": 3.2},  "windDirection": {"sg": 45},  "gust": {"sg": 5.1},
+      "waterTemperature":        {"sg": 17.4}
+    },
+    {
+      "time": "2024-01-15T12:00:00+00:00",
+      "waveHeight":              {"sg": 0.98}, "wavePeriod":  {"sg": 9.9},  "waveDirection":              {"sg": 265},
+      "swellHeight":             {"sg": 0.91}, "swellPeriod": {"sg": 10.3}, "swellDirection":             {"sg": 260},
+      "secondarySwellHeight":    {"sg": 0.20}, "secondarySwellPeriod": {"sg": 5.7}, "secondarySwellDirection": {"sg": 182},
+      "windSpeed":               {"sg": 4.1},  "windDirection": {"sg": 180}, "gust": {"sg": 6.3},
+      "waterTemperature":        {"sg": 17.5}
+    },
+    {
+      "time": "2024-01-15T13:00:00+00:00",
+      "waveHeight":              {"sg": 1.02}, "wavePeriod":  {"sg": 9.7},  "waveDirection":              {"sg": 262},
+      "swellHeight":             {"sg": 0.93}, "swellPeriod": {"sg": 10.1}, "swellDirection":             {"sg": 258},
+      "secondarySwellHeight":    {"sg": 0.22}, "secondarySwellPeriod": {"sg": 5.6}, "secondarySwellDirection": {"sg": 180},
+      "windSpeed":               {"sg": 5.0},  "windDirection": {"sg": 210}, "gust": {"sg": 7.8},
+      "waterTemperature":        {"sg": 17.5}
+    },
+    {
+      "time": "2024-01-15T14:00:00+00:00",
+      "waveHeight":              {"sg": 1.05}, "wavePeriod":  {"sg": 9.5},  "waveDirection":              {"sg": 260},
+      "swellHeight":             {"sg": 0.95}, "swellPeriod": {"sg": 9.9},  "swellDirection":             {"sg": 255},
+      "secondarySwellHeight":    {"sg": 0.24}, "secondarySwellPeriod": {"sg": 5.5}, "secondarySwellDirection": {"sg": 178},
+      "windSpeed":               {"sg": 5.8},  "windDirection": {"sg": 225}, "gust": {"sg": 8.9},
+      "waterTemperature":        {"sg": 17.5}
+    },
+    {
+      "time": "2024-01-15T15:00:00+00:00",
+      "waveHeight":              {"sg": 1.08}, "wavePeriod":  {"sg": 9.3},  "waveDirection":              {"sg": 258},
+      "swellHeight":             {"sg": 0.96}, "swellPeriod": {"sg": 9.7},  "swellDirection":             {"sg": 252},
+      "secondarySwellHeight":    {"sg": 0.25}, "secondarySwellPeriod": {"sg": 5.4}, "secondarySwellDirection": {"sg": 175},
+      "windSpeed":               {"sg": 6.2},  "windDirection": {"sg": 235}, "gust": {"sg": 9.5},
+      "waterTemperature":        {"sg": 17.6}
+    },
+    {
+      "time": "2024-01-15T16:00:00+00:00",
+      "waveHeight":              {"sg": 1.10}, "wavePeriod":  {"sg": 9.1},  "waveDirection":              {"sg": 255},
+      "swellHeight":             {"sg": 0.97}, "swellPeriod": {"sg": 9.5},  "swellDirection":             {"sg": 250},
+      "secondarySwellHeight":    {"sg": 0.26}, "secondarySwellPeriod": {"sg": 5.3}, "secondarySwellDirection": {"sg": 172},
+      "windSpeed":               {"sg": 6.5},  "windDirection": {"sg": 240}, "gust": {"sg": 9.9},
+      "waterTemperature":        {"sg": 17.6}
+    },
+    {
+      "time": "2024-01-15T17:00:00+00:00",
+      "waveHeight":              {"sg": 1.12}, "wavePeriod":  {"sg": 9.0},  "waveDirection":              {"sg": 253},
+      "swellHeight":             {"sg": 0.98}, "swellPeriod": {"sg": 9.4},  "swellDirection":             {"sg": 248},
+      "secondarySwellHeight":    {"sg": 0.27}, "secondarySwellPeriod": {"sg": 5.2}, "secondarySwellDirection": {"sg": 170},
+      "windSpeed":               {"sg": 6.8},  "windDirection": {"sg": 245}, "gust": {"sg": 10.3},
+      "waterTemperature":        {"sg": 17.6}
+    },
+    {
+      "time": "2024-01-15T18:00:00+00:00",
+      "waveHeight":              {"sg": 1.13}, "wavePeriod":  {"sg": 8.9},  "waveDirection":              {"sg": 252},
+      "swellHeight":             {"sg": 0.99}, "swellPeriod": {"sg": 9.3},  "swellDirection":             {"sg": 247},
+      "secondarySwellHeight":    {"sg": 0.27}, "secondarySwellPeriod": {"sg": 5.2}, "secondarySwellDirection": {"sg": 168},
+      "windSpeed":               {"sg": 7.0},  "windDirection": {"sg": 248}, "gust": {"sg": 10.6},
+      "waterTemperature":        {"sg": 17.7}
+    },
+    {
+      "time": "2024-01-16T06:00:00+00:00",
+      "waveHeight":              {"sg": 1.20}, "wavePeriod":  {"sg": 9.0},  "waveDirection":              {"sg": 265},
+      "swellHeight":             {"sg": 1.10}, "swellPeriod": {"sg": 9.5},  "swellDirection":             {"sg": 260},
+      "secondarySwellHeight":    {"sg": 0.30}, "secondarySwellPeriod": {"sg": 6.0}, "secondarySwellDirection": {"sg": 195},
+      "windSpeed":               {"sg": 3.5},  "windDirection": {"sg": 30},  "gust": {"sg": 5.2},
+      "waterTemperature":        {"sg": 17.1}
+    },
+    {
+      "time": "2024-01-16T07:00:00+00:00",
+      "waveHeight":              {"sg": 1.22}, "wavePeriod":  {"sg": 9.2},  "waveDirection":              {"sg": 263},
+      "swellHeight":             {"sg": 1.12}, "swellPeriod": {"sg": 9.7},  "swellDirection":             {"sg": 258},
+      "secondarySwellHeight":    {"sg": 0.29}, "secondarySwellPeriod": {"sg": 5.9}, "secondarySwellDirection": {"sg": 192},
+      "windSpeed":               {"sg": 3.8},  "windDirection": {"sg": 25},  "gust": {"sg": 5.6},
+      "waterTemperature":        {"sg": 17.1}
+    },
+    {
+      "time": "2024-01-16T08:00:00+00:00",
+      "waveHeight":              {"sg": 1.25}, "wavePeriod":  {"sg": 9.4},  "waveDirection":              {"sg": 261},
+      "swellHeight":             {"sg": 1.15}, "swellPeriod": {"sg": 9.9},  "swellDirection":             {"sg": 256},
+      "secondarySwellHeight":    {"sg": 0.28}, "secondarySwellPeriod": {"sg": 5.8}, "secondarySwellDirection": {"sg": 190},
+      "windSpeed":               {"sg": 4.0},  "windDirection": {"sg": 20},  "gust": {"sg": 5.9},
+      "waterTemperature":        {"sg": 17.2}
+    },
+    {
+      "time": "2024-01-16T09:00:00+00:00",
+      "waveHeight":              {"sg": 1.28}, "wavePeriod":  {"sg": 9.5},  "waveDirection":              {"sg": 260},
+      "swellHeight":             {"sg": 1.18}, "swellPeriod": {"sg": 10.0}, "swellDirection":             {"sg": 255},
+      "secondarySwellHeight":    {"sg": 0.28}, "secondarySwellPeriod": {"sg": 5.7}, "secondarySwellDirection": {"sg": 188},
+      "windSpeed":               {"sg": 4.3},  "windDirection": {"sg": 35},  "gust": {"sg": 6.3},
+      "waterTemperature":        {"sg": 17.2}
+    },
+    {
+      "time": "2024-01-16T10:00:00+00:00",
+      "waveHeight":              {"sg": 1.31}, "wavePeriod":  {"sg": 9.5},  "waveDirection":              {"sg": 258},
+      "swellHeight":             {"sg": 1.20}, "swellPeriod": {"sg": 10.0}, "swellDirection":             {"sg": 253},
+      "secondarySwellHeight":    {"sg": 0.29}, "secondarySwellPeriod": {"sg": 5.7}, "secondarySwellDirection": {"sg": 186},
+      "windSpeed":               {"sg": 5.0},  "windDirection": {"sg": 120}, "gust": {"sg": 7.5},
+      "waterTemperature":        {"sg": 17.3}
+    },
+    {
+      "time": "2024-01-16T11:00:00+00:00",
+      "waveHeight":              {"sg": 1.35}, "wavePeriod":  {"sg": 9.4},  "waveDirection":              {"sg": 256},
+      "swellHeight":             {"sg": 1.22}, "swellPeriod": {"sg": 9.9},  "swellDirection":             {"sg": 251},
+      "secondarySwellHeight":    {"sg": 0.30}, "secondarySwellPeriod": {"sg": 5.6}, "secondarySwellDirection": {"sg": 184},
+      "windSpeed":               {"sg": 5.8},  "windDirection": {"sg": 200}, "gust": {"sg": 8.7},
+      "waterTemperature":        {"sg": 17.3}
+    },
+    {
+      "time": "2024-01-16T12:00:00+00:00",
+      "waveHeight":              {"sg": 1.38}, "wavePeriod":  {"sg": 9.3},  "waveDirection":              {"sg": 254},
+      "swellHeight":             {"sg": 1.24}, "swellPeriod": {"sg": 9.8},  "swellDirection":             {"sg": 249},
+      "secondarySwellHeight":    {"sg": 0.31}, "secondarySwellPeriod": {"sg": 5.5}, "secondarySwellDirection": {"sg": 182},
+      "windSpeed":               {"sg": 6.5},  "windDirection": {"sg": 230}, "gust": {"sg": 9.8},
+      "waterTemperature":        {"sg": 17.4}
+    },
+    {
+      "time": "2024-01-16T13:00:00+00:00",
+      "waveHeight":              {"sg": 1.40}, "wavePeriod":  {"sg": 9.2},  "waveDirection":              {"sg": 252},
+      "swellHeight":             {"sg": 1.25}, "swellPeriod": {"sg": 9.7},  "swellDirection":             {"sg": 247},
+      "secondarySwellHeight":    {"sg": 0.32}, "secondarySwellPeriod": {"sg": 5.4}, "secondarySwellDirection": {"sg": 180},
+      "windSpeed":               {"sg": 7.1},  "windDirection": {"sg": 245}, "gust": {"sg": 10.5},
+      "waterTemperature":        {"sg": 17.4}
+    },
+    {
+      "time": "2024-01-16T14:00:00+00:00",
+      "waveHeight":              {"sg": 1.42}, "wavePeriod":  {"sg": 9.0},  "waveDirection":              {"sg": 250},
+      "swellHeight":             {"sg": 1.26}, "swellPeriod": {"sg": 9.6},  "swellDirection":             {"sg": 245},
+      "secondarySwellHeight":    {"sg": 0.33}, "secondarySwellPeriod": {"sg": 5.3}, "secondarySwellDirection": {"sg": 178},
+      "windSpeed":               {"sg": 7.5},  "windDirection": {"sg": 252}, "gust": {"sg": 11.0},
+      "waterTemperature":        {"sg": 17.5}
+    },
+    {
+      "time": "2024-01-16T15:00:00+00:00",
+      "waveHeight":              {"sg": 1.44}, "wavePeriod":  {"sg": 8.9},  "waveDirection":              {"sg": 249},
+      "swellHeight":             {"sg": 1.27}, "swellPeriod": {"sg": 9.5},  "swellDirection":             {"sg": 244},
+      "secondarySwellHeight":    {"sg": 0.33}, "secondarySwellPeriod": {"sg": 5.3}, "secondarySwellDirection": {"sg": 176},
+      "windSpeed":               {"sg": 7.8},  "windDirection": {"sg": 256}, "gust": {"sg": 11.4},
+      "waterTemperature":        {"sg": 17.5}
+    },
+    {
+      "time": "2024-01-16T16:00:00+00:00",
+      "waveHeight":              {"sg": 1.45}, "wavePeriod":  {"sg": 8.8},  "waveDirection":              {"sg": 248},
+      "swellHeight":             {"sg": 1.27}, "swellPeriod": {"sg": 9.4},  "swellDirection":             {"sg": 243},
+      "secondarySwellHeight":    {"sg": 0.34}, "secondarySwellPeriod": {"sg": 5.2}, "secondarySwellDirection": {"sg": 174},
+      "windSpeed":               {"sg": 8.0},  "windDirection": {"sg": 258}, "gust": {"sg": 11.7},
+      "waterTemperature":        {"sg": 17.6}
+    },
+    {
+      "time": "2024-01-16T17:00:00+00:00",
+      "waveHeight":              {"sg": 1.46}, "wavePeriod":  {"sg": 8.7},  "waveDirection":              {"sg": 247},
+      "swellHeight":             {"sg": 1.28}, "swellPeriod": {"sg": 9.3},  "swellDirection":             {"sg": 242},
+      "secondarySwellHeight":    {"sg": 0.34}, "secondarySwellPeriod": {"sg": 5.2}, "secondarySwellDirection": {"sg": 173},
+      "windSpeed":               {"sg": 8.2},  "windDirection": {"sg": 260}, "gust": {"sg": 12.0},
+      "waterTemperature":        {"sg": 17.6}
+    },
+    {
+      "time": "2024-01-16T18:00:00+00:00",
+      "waveHeight":              {"sg": 1.47}, "wavePeriod":  {"sg": 8.6},  "waveDirection":              {"sg": 246},
+      "swellHeight":             {"sg": 1.28}, "swellPeriod": {"sg": 9.2},  "swellDirection":             {"sg": 241},
+      "secondarySwellHeight":    {"sg": 0.35}, "secondarySwellPeriod": {"sg": 5.1}, "secondarySwellDirection": {"sg": 171},
+      "windSpeed":               {"sg": 8.4},  "windDirection": {"sg": 262}, "gust": {"sg": 12.2},
+      "waterTemperature":        {"sg": 17.7}
+    }
+  ]
+}
