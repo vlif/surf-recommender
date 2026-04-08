@@ -11,8 +11,9 @@ import (
 )
 
 const (
-	baseURL   = "https://api.stormglass.io/v2/weather/point"
-	apiParams = "waveHeight,wavePeriod,waveDirection,windSpeed,windDirection,swellHeight,swellPeriod,swellDirection,secondarySwellHeight,secondarySwellDirection,secondarySwellPeriod,waterTemperature,gust"
+	baseURL     = "https://api.stormglass.io/v2/weather/point"
+	tideURL     = "https://api.stormglass.io/v2/tide/extremes/point"
+	apiParams   = "waveHeight,wavePeriod,waveDirection,windSpeed,windDirection,swellHeight,swellPeriod,swellDirection,secondarySwellHeight,secondarySwellDirection,secondarySwellPeriod,waterTemperature,gust"
 )
 
 type SGValue struct {
@@ -38,6 +39,17 @@ type HourData struct {
 
 type Response struct {
 	Hours []HourData `json:"hours"`
+}
+
+// TideExtreme — один экстремум прилива (максимум или минимум).
+type TideExtreme struct {
+	Time   string  `json:"time"`
+	Height float64 `json:"height"`
+	Type   string  `json:"type"` // "high" или "low"
+}
+
+type tideResponse struct {
+	Data []TideExtreme `json:"data"`
 }
 
 type Client struct {
@@ -84,6 +96,57 @@ func (c *Client) Fetch(lat, lng float64, start, end time.Time) ([]HourData, erro
 		return nil, fmt.Errorf("decode stormglass response: %w", err)
 	}
 	return result.Hours, nil
+}
+
+// FetchTides возвращает приливные экстремумы (максимумы и минимумы) за период [start, end].
+func (c *Client) FetchTides(lat, lng float64, start, end time.Time) ([]TideExtreme, error) {
+	u, _ := url.Parse(tideURL)
+	q := u.Query()
+	q.Set("lat", fmt.Sprintf("%.3f", lat))
+	q.Set("lng", fmt.Sprintf("%.3f", lng))
+	q.Set("start", start.UTC().Format(time.RFC3339))
+	q.Set("end", end.UTC().Format(time.RFC3339))
+	u.RawQuery = q.Encode()
+
+	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
+	if err != nil {
+		return nil, fmt.Errorf("build tide request: %w", err)
+	}
+	req.Header.Set("Authorization", c.token)
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("stormglass tide request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("stormglass tide API %d: %s", resp.StatusCode, body)
+	}
+
+	var result tideResponse
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return nil, fmt.Errorf("decode tide response: %w", err)
+	}
+	return result.Data, nil
+}
+
+// FilterTideDay возвращает приливные экстремумы за указанную дату (UTC).
+func FilterTideDay(tides []TideExtreme, date time.Time) []TideExtreme {
+	y, m, d := date.UTC().Date()
+	var result []TideExtreme
+	for _, t := range tides {
+		pt, err := time.Parse(time.RFC3339, t.Time)
+		if err != nil {
+			continue
+		}
+		py, pm, pd := pt.UTC().Date()
+		if py == y && pm == m && pd == d {
+			result = append(result, t)
+		}
+	}
+	return result
 }
 
 // FilterDay возвращает часы за указанную дату в диапазоне [startHour, endHour] UTC.

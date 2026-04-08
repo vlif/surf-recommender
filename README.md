@@ -140,7 +140,7 @@ testdata/
 
 ### Как работает
 
-1. Stormglass возвращает почасовые данные по двум точкам побережья (06:00–18:00 UTC)
+1. Stormglass возвращает почасовые данные по двум точкам побережья (06:00–18:00 UTC) ([API эндпоинт](https://docs.stormglass.io/?_gl=1*y0n2st*_gcl_aw*R0NMLjE3NzU1NTI5NjUuQ2p3S0NBancxdExPQmhBTUVpd0FpUGtSSHJIWkFfYjcwSUZ0M29FNDNSVDdwMWtXbVhwbHZqX1lsczBKSlJfMkpBMllEc3hIXzVxbG94b0M2M2NRQXZEX0J3RQ..*_gcl_au*MTA2OTM1NzE5MS4xNzc1NTUyOTY1#/weather?id=point-request))
 2. Claude получает все часы по порядку и сам находит лучшее временное окно для сессии
 3. Рекомендация на русском отправляется в Telegram-канал
 

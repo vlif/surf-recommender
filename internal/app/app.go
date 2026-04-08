@@ -23,6 +23,7 @@ func New(svc *spotrecommender.Service, tg *telegram.Client, chatID, spot string)
 	return &App{svc: svc, tg: tg, chatID: chatID, spot: spot}
 }
 
+
 // Start запускает планировщик с заданным крон-выражением и часовым поясом.
 // Блокируется до отмены ctx, затем выполняет graceful shutdown.
 func (a *App) Start(ctx context.Context, cronExpr, timezone string) error {

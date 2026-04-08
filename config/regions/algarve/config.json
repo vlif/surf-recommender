@@ -1,6 +1,7 @@
 {
   "id": "algarve",
   "display_name": "Алгарве (Лагуш)",
+  "tide_point": { "lat": 37.1, "lng": -8.675 },
   "forecast_points": [
     {
       "name": "Южное побережье (Meia Praia, Luz, Burgau, Salema, Zavial, Mareta)",

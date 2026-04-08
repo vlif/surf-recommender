@@ -68,6 +68,7 @@ func main() {
 	daemon := flag.Bool("daemon", false, "Запустить как планировщик (по расписанию CRON_SCHEDULE)")
 	mockMode := flag.Bool("mock", false, "Тестовый режим: данные из файла вместо Stormglass API")
 	mockFile := flag.String("mock-file", "testdata/stormglass_response.json", "Путь к JSON-файлу с тестовыми данными")
+	mockTideFile := flag.String("mock-tide-file", "testdata/stormglass_tides.json", "Путь к JSON-файлу с тестовыми данными приливов")
 	flag.Parse()
 
 	region, ok := registry[*regionFlag]
@@ -76,16 +77,23 @@ func main() {
 	}
 
 	var sgClient stormglass.Fetcher
+	var tideClient stormglass.TideFetcher
 	if *mockMode {
 		log.Printf("[mock] данные из файла: %s", *mockFile)
+		log.Printf("[mock] приливы из файла: %s", *mockTideFile)
 		sgClient = stormglass.NewMockClient(*mockFile)
+		tideClient = stormglass.NewMockTideClient(*mockTideFile)
 	} else {
-		sgClient = stormglass.NewClient(stormglassToken)
+		real := stormglass.NewClient(stormglassToken)
+		sgClient = real
+		if region.TidePoint != nil {
+			tideClient = real
+		}
 	}
 
 	anthropicClient := anthropic.NewClient(anthropicKey, anthropicModel)
 	tgClient := telegram.NewClient(telegramToken)
-	svc := spotrecommender.NewService(sgClient, anthropicClient, region)
+	svc := spotrecommender.NewService(sgClient, tideClient, anthropicClient, region)
 
 	if *daemon {
 		runDaemon(svc, tgClient, telegramChatID, *spot, cronSchedule, cronTimezone)

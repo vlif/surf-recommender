@@ -34,6 +34,58 @@ func (m *MockClient) Fetch(_, _ float64, _, _ time.Time) ([]HourData, error) {
 	return shiftDatesToToday(resp.Hours), nil
 }
 
+// MockTideClient читает данные приливов из локального JSON-файла.
+type MockTideClient struct {
+	filePath string
+}
+
+func NewMockTideClient(filePath string) *MockTideClient {
+	return &MockTideClient{filePath: filePath}
+}
+
+// FetchTides игнорирует lat/lng и возвращает данные из файла с пересчитанными датами.
+func (m *MockTideClient) FetchTides(_, _ float64, _, _ time.Time) ([]TideExtreme, error) {
+	data, err := os.ReadFile(m.filePath)
+	if err != nil {
+		return nil, fmt.Errorf("mock: read tide fixture %s: %w", m.filePath, err)
+	}
+
+	var resp tideResponse
+	if err := json.Unmarshal(data, &resp); err != nil {
+		return nil, fmt.Errorf("mock: decode tide fixture: %w", err)
+	}
+
+	return shiftTideDatesToToday(resp.Data), nil
+}
+
+// shiftTideDatesToToday сдвигает временные метки приливного fixture на текущий день.
+func shiftTideDatesToToday(tides []TideExtreme) []TideExtreme {
+	if len(tides) == 0 {
+		return tides
+	}
+
+	firstTime, err := time.Parse(time.RFC3339, tides[0].Time)
+	if err != nil {
+		return tides
+	}
+
+	firstDay := firstTime.UTC().Truncate(24 * time.Hour)
+	today := time.Now().UTC().Truncate(24 * time.Hour)
+	offset := today.Sub(firstDay)
+
+	result := make([]TideExtreme, len(tides))
+	for i, t := range tides {
+		pt, err := time.Parse(time.RFC3339, t.Time)
+		if err != nil {
+			result[i] = t
+			continue
+		}
+		t.Time = pt.Add(offset).Format(time.RFC3339)
+		result[i] = t
+	}
+	return result
+}
+
 // shiftDatesToToday сдвигает все временные метки fixture так,
 // чтобы первый день стал сегодня, второй — завтра и т.д.
 func shiftDatesToToday(hours []HourData) []HourData {

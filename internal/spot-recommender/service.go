@@ -19,12 +19,13 @@ const (
 // Service координирует получение прогноза и генерацию рекомендации для заданного региона.
 type Service struct {
 	sg        stormglass.Fetcher
+	tides     stormglass.TideFetcher // nil — приливы не запрашиваются
 	anthropic *anthropic.Client
 	region    regions.Region
 }
 
-func NewService(sg stormglass.Fetcher, anthropic *anthropic.Client, region regions.Region) *Service {
-	return &Service{sg: sg, anthropic: anthropic, region: region}
+func NewService(sg stormglass.Fetcher, tides stormglass.TideFetcher, anthropic *anthropic.Client, region regions.Region) *Service {
+	return &Service{sg: sg, tides: tides, anthropic: anthropic, region: region}
 }
 
 // pointHours — почасовые данные одной точки прогноза за один день.
@@ -52,7 +53,19 @@ func (s *Service) Recommend(spot string, date time.Time) (string, error) {
 		return "", fmt.Errorf("нет данных Stormglass для даты %s", today.Format("2006-01-02"))
 	}
 
-	userMsg := buildUserMessage(spot, today, data)
+	var todayTides, tomorrowTides []stormglass.TideExtreme
+	if s.tides != nil && s.region.TidePoint != nil {
+		tp := s.region.TidePoint
+		// Запрашиваем с запасом: от полуночи сегодня до полуночи послезавтра.
+		allTides, err := s.tides.FetchTides(tp.Lat, tp.Lng, today, tomorrow.Add(24*time.Hour))
+		if err != nil {
+			return "", fmt.Errorf("fetch tides: %w", err)
+		}
+		todayTides = stormglass.FilterTideDay(allTides, today)
+		tomorrowTides = stormglass.FilterTideDay(allTides, tomorrow)
+	}
+
+	userMsg := buildUserMessage(spot, today, data, todayTides, tomorrowTides)
 	return s.anthropic.Send(s.region.SystemPrompt, userMsg)
 }
 
@@ -71,7 +84,7 @@ func (s *Service) fetchAllPoints(start, end, today, tomorrow time.Time) ([]point
 	return result, nil
 }
 
-func buildUserMessage(spot string, date time.Time, data []pointHours) string {
+func buildUserMessage(spot string, date time.Time, data []pointHours, todayTides, tomorrowTides []stormglass.TideExtreme) string {
 	spotLine := "Порекомендуй лучший спот для сёрфинга сегодня."
 	if spot != "" {
 		spotLine = fmt.Sprintf("Проанализируй условия конкретно для спота %s и сравни с альтернативами.", spot)
@@ -82,6 +95,15 @@ func buildUserMessage(spot string, date time.Time, data []pointHours) string {
 	fmt.Fprintf(&sb, "Данные: %02d:00–%02d:00 UTC (%02d:00–%02d:00 по Лиссабону), почасово\n\n",
 		dayStartHour, dayEndHour, dayStartHour+1, dayEndHour+1)
 	fmt.Fprintf(&sb, "%s\n", spotLine)
+
+	if len(todayTides) > 0 {
+		fmt.Fprintf(&sb, "\n=== ПРИЛИВЫ СЕГОДНЯ (UTC) ===\n")
+		fmt.Fprintf(&sb, "%s\n", formatTides(todayTides))
+	}
+	if len(tomorrowTides) > 0 {
+		fmt.Fprintf(&sb, "\n=== ПРИЛИВЫ ЗАВТРА (UTC) ===\n")
+		fmt.Fprintf(&sb, "%s\n", formatTides(tomorrowTides))
+	}
 
 	fmt.Fprintf(&sb, "\n=== ПРОГНОЗ СЕГОДНЯ ===\n")
 	for _, p := range data {
@@ -110,6 +132,22 @@ func buildUserMessage(spot string, date time.Time, data []pointHours) string {
 		}
 	}
 
+	return sb.String()
+}
+
+func formatTides(tides []stormglass.TideExtreme) string {
+	var sb strings.Builder
+	for _, t := range tides {
+		pt, err := time.Parse(time.RFC3339, t.Time)
+		if err != nil {
+			continue
+		}
+		tideType := "максимум"
+		if t.Type == "low" {
+			tideType = "минимум"
+		}
+		fmt.Fprintf(&sb, "  %s — %s (%.1fм)\n", pt.UTC().Format("15:04"), tideType, t.Height)
+	}
 	return sb.String()
 }
 
