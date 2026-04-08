@@ -1,0 +1,17 @@
+{
+  "id": "lisbon",
+  "display_name": "Лиссабон",
+  "tide_point": { "lat": 38.68, "lng": -9.34 },
+  "forecast_points": [
+    {
+      "name": "Побережье Капарики (Caparica)",
+      "lat": 38.62,
+      "lng": -9.24
+    },
+    {
+      "name": "Побережье Кашкайша (Carcavelos, São Julião, Guincho)",
+      "lat": 38.68,
+      "lng": -9.42
+    }
+  ]
+}

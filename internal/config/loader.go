@@ -44,8 +44,14 @@ func LoadRegion(regionDir string) (regions.Region, error) {
 }
 
 // LoadAllRegions сканирует baseDir и загружает все регионы из поддиректорий.
+// Если в baseDir есть файл base.txt — его содержимое дописывается к промпту каждого региона.
 // Возвращает map[regionID]Region.
 func LoadAllRegions(baseDir string) (map[string]regions.Region, error) {
+	var basePrompt string
+	if data, err := os.ReadFile(filepath.Join(baseDir, "base.txt")); err == nil {
+		basePrompt = strings.TrimSpace(string(data))
+	}
+
 	entries, err := os.ReadDir(baseDir)
 	if err != nil {
 		return nil, fmt.Errorf("читаю директорию регионов %s: %w", baseDir, err)
@@ -60,6 +66,9 @@ func LoadAllRegions(baseDir string) (map[string]regions.Region, error) {
 		region, err := LoadRegion(regionDir)
 		if err != nil {
 			return nil, fmt.Errorf("загружаю регион %s: %w", entry.Name(), err)
+		}
+		if basePrompt != "" {
+			region.SystemPrompt += "\n\n" + basePrompt
 		}
 		registry[region.ID] = region
 	}
