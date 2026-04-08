@@ -119,44 +119,73 @@ Fixture содержит реалистичный сценарий:
 ## Архитектура
 
 ```
-cmd/surf-recommender/main.go        # CLI: флаги --region --spot --date --mock
+cmd/surf-recommender/main.go        # CLI: флаги --region --spot --date --mock --daemon
 internal/
   regions/
-    region.go                       # тип Region и ForecastPoint
-    algarve/region.go               # споты, промпт и точки прогноза для Алгарве
+    region.go                       # типы Region, ForecastPoint, TidePoint
+  config/
+    loader.go                       # загрузка регионов из config/regions/
   spot-recommender/
     service.go                      # бизнес-логика: fetch → Claude → результат
-    commands.go                     # отправка результата в Telegram
+    commands.go                     # вывод результата (Telegram или stdout)
+  app/
+    app.go                          # планировщик (gocron), graceful shutdown
 pkg/
   stormglass/
-    fetcher.go                      # интерфейс Fetcher (реальный и mock)
-    client.go                       # реальный Stormglass API клиент
-    mock.go                         # mock-клиент из JSON-файла
+    fetcher.go                      # интерфейсы Fetcher и TideFetcher
+    client.go                       # реальный Stormglass API клиент (прогноз + приливы)
+    mock.go                         # mock-клиенты из JSON-файлов
   anthropic/client.go               # Anthropic Messages API клиент
   telegram/client.go                # Telegram Bot API клиент
+config/
+  regions/
+    algarve/
+      config.json                   # id, display_name, forecast_points, tide_point
+      prompt.txt                    # системный промпт для Claude
 testdata/
-  stormglass_response.json          # fixture для тестового режима
+  stormglass_response.json          # fixture прогноза для тестового режима
+  stormglass_tides.json             # fixture приливов для тестового режима
 ```
 
 ### Как работает
 
-1. Stormglass возвращает почасовые данные по двум точкам побережья (06:00–18:00 UTC) ([API эндпоинт](https://docs.stormglass.io/?_gl=1*y0n2st*_gcl_aw*R0NMLjE3NzU1NTI5NjUuQ2p3S0NBancxdExPQmhBTUVpd0FpUGtSSHJIWkFfYjcwSUZ0M29FNDNSVDdwMWtXbVhwbHZqX1lsczBKSlJfMkpBMllEc3hIXzVxbG94b0M2M2NRQXZEX0J3RQ..*_gcl_au*MTA2OTM1NzE5MS4xNzc1NTUyOTY1#/weather?id=point-request))
-2. Claude получает все часы по порядку и сам находит лучшее временное окно для сессии
-3. Рекомендация на русском отправляется в Telegram-канал
+1. Stormglass возвращает почасовые данные по точкам побережья (06:00–18:00 UTC) и приливные экстремумы за два дня
+2. Claude получает все часы по порядку, данные о приливах и сам находит лучшее временное окно для сессии
+3. Рекомендация на русском отправляется в Telegram-канал (или в stdout при `--mock`)
+
+### Почему используется поле `.sg` из ответа Stormglass
+
+Stormglass возвращает значения каждого параметра сразу из нескольких погодных моделей:
+
+```json
+"waveHeight": { "sg": 0.82, "noaa": 0.75, "icon": 0.88 }
+```
+
+`sg` — собственная сводная модель Stormglass, которая блендирует несколько источников в одно значение. Мы берём именно её, потому что:
+- она **всегда присутствует** — остальные источники могут отсутствовать для конкретной точки или параметра
+- Stormglass уже сделал блендинг — выбирать между моделями самостоятельно нет смысла
 
 ---
 
 ## Добавить новый регион
 
-1. Создай `internal/regions/<name>/region.go` с описанием спотов, точками прогноза и промптом
-2. Зарегистрируй в `cmd/surf-recommender/main.go`:
+1. Создай директорию `config/regions/<name>/`
+2. Добавь `config.json` с метаданными и точками прогноза:
 
-```go
-var registry = map[string]regions.Region{
-    "algarve": algarve.Region,
-    "lisbon":  lisbon.Region, // новый регион
+```json
+{
+  "id": "lisbon",
+  "display_name": "Лиссабон",
+  "tide_point": { "lat": 38.7, "lng": -9.4 },
+  "forecast_points": [
+    { "name": "Побережье Кашкайш", "lat": 38.7, "lng": -9.4 }
+  ]
 }
 ```
+
+3. Добавь `prompt.txt` с системным промптом для Claude — описание спотов, правила интерпретации, формат ответа.
+
+Регион подхватится автоматически при следующем запуске — код менять не нужно.
 
 ---
 
@@ -174,10 +203,3 @@ var registry = map[string]regions.Region{
 | Castelejo | 40 мин | западное |
 | Arrifana | 40 мин | западное |
 | Amado | 45 мин | западное |
-
-## Идеи для улучшений
-
-1. Сделать поддержку вызова модуля через крон 
-2. Почему берется SG из результата ответа Stormglass API?
-3. Зачем вобще нужны смещения часовых поясов в коде?
-4. Добавить поддержку прогноза для Лиссабона
