@@ -19,6 +19,12 @@ jobs:
         with:
           go-version-file: go.mod
 
+      - name: Vet
+        run: go vet ./...
+
+      - name: Test
+        run: go test ./...
+
       - name: Build binary (linux/amd64)
         run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o surf-recommender ./cmd/surf-recommender
 
