@@ -1,0 +1,29 @@
+name: Daily Surf Recommendation
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 06:00 UTC = 07:00 по Лиссабону летом
+  workflow_dispatch:      # ручной запуск из интерфейса GitHub
+
+jobs:
+  recommend:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run surf recommender
+        run: |
+          docker run --rm \
+            -e STORMGLASS_TOKEN=${{ secrets.STORMGLASS_TOKEN }} \
+            -e ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }} \
+            -e TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }} \
+            -e TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }} \
+            ghcr.io/vlif/surf-recommender:latest
