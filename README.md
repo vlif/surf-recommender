@@ -29,6 +29,10 @@ TELEGRAM_BOT_TOKEN=your_telegram_bot_token  # обязательно
 
 TELEGRAM_CHAT_ID=@surfing_in_portugal       # опционально, это значение по умолчанию
 ANTHROPIC_MODEL=claude-sonnet-4-6           # опционально
+
+# Планировщик (только для --daemon режима)
+CRON_SCHEDULE=0 6 * * *                     # опционально, по умолчанию 06:00
+CRON_TIMEZONE=Europe/Lisbon                 # опционально, по умолчанию Europe/Lisbon
 ```
 
 ---
@@ -55,6 +59,17 @@ ANTHROPIC_MODEL=claude-sonnet-4-6           # опционально
 **Выбор региона:**
 ```bash
 ./surf-recommender --region algarve   # по умолчанию
+```
+
+**Запуск по расписанию** (daemon-режим):
+```bash
+./surf-recommender --daemon
+```
+Блокируется и отправляет рекомендацию каждый день в 06:00 по Лиссабону. Останавливается по Ctrl+C или SIGTERM.
+
+Изменить расписание или часовой пояс через env:
+```bash
+CRON_SCHEDULE="0 7 * * *" CRON_TIMEZONE="Europe/Lisbon" ./surf-recommender --daemon
 ```
 
 **Тестовый режим** (не тратит квоту Stormglass):
@@ -159,3 +174,10 @@ var registry = map[string]regions.Region{
 | Castelejo | 40 мин | западное |
 | Arrifana | 40 мин | западное |
 | Amado | 45 мин | западное |
+
+## Идеи для улучшений
+
+1. Сделать поддержку вызова модуля через крон 
+2. Почему берется SG из результата ответа Stormglass API?
+3. Зачем вобще нужны смещения часовых поясов в коде?
+4. Добавить поддержку прогноза для Лиссабона

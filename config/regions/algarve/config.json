@@ -1,0 +1,16 @@
+{
+  "id": "algarve",
+  "display_name": "Алгарве (Лагуш)",
+  "forecast_points": [
+    {
+      "name": "Южное побережье (Meia Praia, Luz, Burgau, Salema, Zavial, Mareta)",
+      "lat": 37.116,
+      "lng": -8.635
+    },
+    {
+      "name": "Западное побережье (Tonel, Castelejo, Arrifana, Amado)",
+      "lat": 37.283,
+      "lng": -8.864
+    }
+  ]
+}

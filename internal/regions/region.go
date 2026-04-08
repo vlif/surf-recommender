@@ -1,32 +1,21 @@
 package regions
 
 // ForecastPoint — точка для запроса прогноза в Stormglass API.
-// Обычно регион содержит 2-3 точки, представляющие разные участки побережья.
 type ForecastPoint struct {
 	// Name используется в тексте промпта для Claude — называй понятно.
 	// Например: "Южное побережье (Meia Praia, Luz, Burgau)"
-	Name string
-	Lat  float64
-	Lng  float64
+	Name string  `json:"name"`
+	Lat  float64 `json:"lat"`
+	Lng  float64 `json:"lng"`
 }
 
 // Region описывает регион для рекомендаций сёрфинга.
-// Чтобы добавить новый регион — создай пакет internal/regions/<name>/region.go
-// и определи там переменную Region этого типа.
+// Данные хранятся в config/regions/<id>/:
+//   - config.json — id, display_name, forecast_points
+//   - prompt.txt  — системный промпт для Claude
 type Region struct {
-	// ID — машинный идентификатор, используется в флаге --region.
-	// Пример: "algarve", "lisbon"
-	ID string
-
-	// DisplayName — человекочитаемое название для логов и заголовков.
-	DisplayName string
-
-	// SystemPrompt — полный системный промпт для Claude:
-	// профиль пользователя, база спотов, правила интерпретации, формат ответа.
-	// Уникален для каждого региона.
-	SystemPrompt string
-
-	// ForecastPoints — список точек для запроса в Stormglass.
-	// Сервис запросит прогноз для каждой точки и передаст данные Claude.
-	ForecastPoints []ForecastPoint
+	ID             string         `json:"id"`
+	DisplayName    string         `json:"display_name"`
+	SystemPrompt   string         `json:"-"` // загружается из prompt.txt
+	ForecastPoints []ForecastPoint `json:"forecast_points"`
 }
