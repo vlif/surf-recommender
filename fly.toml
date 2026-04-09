@@ -14,7 +14,6 @@ primary_region = 'cdg'
 
 [http_service]
   auto_stop_machines = false
-  auto_start_machines = false
 
 [[vm]]
   memory = '256mb'
