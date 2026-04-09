@@ -12,6 +12,10 @@ primary_region = 'cdg'
   CRON_TIMEZONE = 'Europe/Lisbon'
   TELEGRAM_CHAT_ID = '@surfing_in_portugal'
 
+[http_service]
+  auto_stop_machines = false
+  auto_start_machines = false
+
 [[vm]]
   memory = '256mb'
   cpus = 1
