@@ -52,6 +52,12 @@ jobs:
   deploy:
     needs: release
     runs-on: ubuntu-latest
+    permissions:
+      deployments: write  # создание записей деплоев в GitHub
+
+    environment:
+      name: production
+      url: https://fly.io/apps/surf-recommender
 
     steps:
       - uses: actions/checkout@v4
