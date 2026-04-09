@@ -1,9 +1,7 @@
 name: Daily Surf Recommendation
 
 on:
-  schedule:
-    - cron: '0 6 * * *'  # 06:00 UTC = 07:00 по Лиссабону летом
-  workflow_dispatch:      # ручной запуск из интерфейса GitHub
+  workflow_dispatch:  # ручной запуск из интерфейса GitHub
 
 jobs:
   recommend:
