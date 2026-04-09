@@ -7,6 +7,86 @@ import (
 	"surf-recommender/pkg/stormglass"
 )
 
+// --- formatTides ---
+
+func TestFormatTides(t *testing.T) {
+	t.Run("пустой слайс возвращает пустую строку", func(t *testing.T) {
+		result := formatTides([]stormglass.TideExtreme{})
+		if result != "" {
+			t.Errorf("ожидали пустую строку, получили %q", result)
+		}
+	})
+
+	t.Run("невалидное время пропускается", func(t *testing.T) {
+		tides := []stormglass.TideExtreme{
+			{Time: "bad-date", Type: "high", Height: 2.0},
+		}
+		result := formatTides(tides)
+		if result != "" {
+			t.Errorf("ожидали пустую строку, получили %q", result)
+		}
+	})
+
+	t.Run("high отображается как максимум", func(t *testing.T) {
+		tides := []stormglass.TideExtreme{
+			{Time: "2026-04-09T06:30:00Z", Type: "high", Height: 2.1},
+		}
+		result := formatTides(tides)
+		if !strings.Contains(result, "максимум") {
+			t.Errorf("ожидали 'максимум', строка: %s", result)
+		}
+		if strings.Contains(result, "минимум") {
+			t.Errorf("не ожидали 'минимум', строка: %s", result)
+		}
+	})
+
+	t.Run("low отображается как минимум", func(t *testing.T) {
+		tides := []stormglass.TideExtreme{
+			{Time: "2026-04-09T12:45:00Z", Type: "low", Height: 0.3},
+		}
+		result := formatTides(tides)
+		if !strings.Contains(result, "минимум") {
+			t.Errorf("ожидали 'минимум', строка: %s", result)
+		}
+	})
+
+	t.Run("время выводится в UTC", func(t *testing.T) {
+		tides := []stormglass.TideExtreme{
+			{Time: "2026-04-09T08:30:00+01:00", Type: "high", Height: 1.9}, // UTC = 07:30
+		}
+		result := formatTides(tides)
+		if !strings.Contains(result, "07:30") {
+			t.Errorf("ожидали 07:30 UTC, строка: %s", result)
+		}
+	})
+
+	t.Run("высота форматируется с одним знаком после запятой", func(t *testing.T) {
+		tides := []stormglass.TideExtreme{
+			{Time: "2026-04-09T06:00:00Z", Type: "high", Height: 2.0},
+			{Time: "2026-04-09T12:00:00Z", Type: "low", Height: 0.36},
+		}
+		result := formatTides(tides)
+		if !strings.Contains(result, "2.0м") {
+			t.Errorf("ожидали '2.0м', строка: %s", result)
+		}
+		if !strings.Contains(result, "0.4м") {
+			t.Errorf("ожидали '0.4м' (округление 0.36), строка: %s", result)
+		}
+	})
+
+	t.Run("несколько приливов — каждый на отдельной строке", func(t *testing.T) {
+		tides := []stormglass.TideExtreme{
+			{Time: "2026-04-09T04:15:00Z", Type: "high", Height: 2.1},
+			{Time: "2026-04-09T10:30:00Z", Type: "low", Height: 0.4},
+		}
+		result := formatTides(tides)
+		lines := strings.Split(strings.TrimRight(result, "\n"), "\n")
+		if len(lines) != 2 {
+			t.Errorf("ожидали 2 строки, получили %d: %v", len(lines), lines)
+		}
+	})
+}
+
 func TestFormatHourly(t *testing.T) {
 	t.Run("пустой слайс возвращает пустую строку", func(t *testing.T) {
 		result := formatHourly([]stormglass.HourData{})
