@@ -1,0 +1,18 @@
+# fly.toml app configuration file generated for surf-recommender on 2026-04-09T11:36:59+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'surf-recommender'
+primary_region = 'cdg'
+
+[build]
+
+[env]
+  CRON_TIMEZONE = 'Europe/Lisbon'
+  TELEGRAM_CHAT_ID = '@surfing_in_portugal'
+
+[[vm]]
+  memory = '256mb'
+  cpus = 1
+  memory_mb = 256
