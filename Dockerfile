@@ -13,4 +13,3 @@ WORKDIR /app
 COPY --from=builder /app/surf-recommender .
 COPY config/ config/
 ENTRYPOINT ["./surf-recommender"]
-CMD ["--daemon"]
